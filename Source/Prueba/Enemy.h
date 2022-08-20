@@ -8,6 +8,7 @@
 
 class UBoxComponent;
 class UStaticMeshComponent;
+class UWidgetComponent;
 
 UCLASS()
 class PRUEBA_API AEnemy : public AActor
@@ -23,12 +24,22 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Component")
 		UHealthComponent* HealthComponent;
-	
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Component")
+		UWidgetComponent* HealthWidget;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Component")
+		float HealthWidgetRotationRate = 0.1f;
+
 	UFUNCTION()
 		void ReceiveDamage(float Damage);
 
 protected:
 
 	virtual void BeginPlay() override;
+
+private:
+
+	void RotateHealthBar();
 
 };

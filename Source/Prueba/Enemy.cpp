@@ -1,6 +1,10 @@
 
 #include "Enemy.h"
 #include "PruebaGameMode.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/WidgetComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "HealthBar.h"
 
 AEnemy::AEnemy()
 {
@@ -8,6 +12,8 @@ AEnemy::AEnemy()
 	RootComponent = StaticMeshComponent;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
+	HealthWidget = CreateDefaultSubobject<UWidgetComponent>("HealthWidget");
+	HealthWidget->SetupAttachment(RootComponent);
 }
 
 void AEnemy::BeginPlay()
@@ -15,6 +21,23 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	GetWorld()->GetAuthGameMode<APruebaGameMode>()->AddEnemyActor(this);
+
+	if (UHealthBar* HealthBar = Cast<UHealthBar>(HealthWidget->GetUserWidgetObject()))
+	{
+		HealthBar->SetOwner(this);
+		bool bLooping = true;
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemy::RotateHealthBar, HealthWidgetRotationRate, bLooping);
+	}
+}
+
+void AEnemy::RotateHealthBar()
+{
+	if (APlayerCameraManager* CameraManager = Cast<APlayerCameraManager>(UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0)))
+	{
+		FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(HealthWidget->GetComponentLocation(), CameraManager->GetCameraLocation());
+		HealthWidget->SetWorldRotation(Rotation);
+	}
 }
 
 void AEnemy::ReceiveDamage(float Damage)

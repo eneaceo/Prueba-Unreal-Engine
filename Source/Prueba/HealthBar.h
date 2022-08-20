@@ -16,6 +16,11 @@ class PRUEBA_API UHealthBar : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+
+	UFUNCTION(BlueprintCallable)
+		void SetOwner(AActor* Actor) { Owner = Actor; }
+
 protected:
 
 	UPROPERTY(meta = (BindWidget))
@@ -26,5 +31,11 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 		UTextBlock* MaxHealthLabel;
+
+	void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+
+private:	
+	
+	TWeakObjectPtr<AActor> Owner;
 
 };
