@@ -6,6 +6,8 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "HealthBar.h"
 
+#include "DrawDebugHelpers.h"	
+
 AEnemy::AEnemy()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
@@ -50,3 +52,27 @@ void AEnemy::ReceiveDamage(float Damage)
 		Destroy();
 	}
 }
+
+void AEnemy::MoveAround(float DeltaTime) 
+{
+	FVector PosStart = GetActorLocation();
+	FVector ActorForward = GetActorRotation().Vector();
+	FVector PosEnd = PosStart + ActorForward * 100;
+
+	UWorld* World = GetWorld();
+	FHitResult HitResult;
+
+	// Test a ray with objects
+	FCollisionQueryParams TraceParams(FName("MoveAround"), FCollisionQueryParams::GetUnknownStatId(), true, this);
+	bool bHitAnything = World->LineTraceSingleByChannel(HitResult, PosStart, PosEnd, ECollisionChannel::ECC_Visibility, TraceParams);
+
+	if (bHitAnything)
+	{
+		SetActorRotation(GetActorRotation() * FMath::Rand());
+	}
+	else
+	{
+		SetActorLocation(PosStart + ActorForward * 100 * DeltaTime);
+	}
+}
+

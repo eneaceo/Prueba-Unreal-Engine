@@ -34,6 +34,9 @@ public:
 	UFUNCTION()
 		void ReceiveDamage(float Damage);
 
+	UFUNCTION(BlueprintCallable)
+		void MoveAround(float DeltaTime);
+
 protected:
 
 	virtual void BeginPlay() override;
