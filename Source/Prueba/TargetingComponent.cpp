@@ -52,7 +52,10 @@ void UTargetingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	if (LockedOnTargetActor->IsPendingKill())
 	{
 		TargetLockOff();
-		TargetActor();
+		if (!GetWorld()->GetAuthGameMode<APruebaGameMode>()->IsEmptyEnemyActors())
+		{
+			FindTarget();
+		}
 	}
 	else
 	{
@@ -63,18 +66,6 @@ void UTargetingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 		{
 			::DrawDebugLine(GetWorld(), OwnerActor->GetActorLocation(), LockedOnTargetActor->GetActorLocation(), FColor(0, 0, 255), false, 1.0f, 0, 1);
 		}
-	}
-}
-
-void UTargetingComponent::TargetActor()
-{
-	if (bTargetLocked)
-	{
-		TargetLockOff();
-	}
-	else
-	{
-		FindTarget();
 	}
 }
 

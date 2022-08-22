@@ -36,6 +36,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void SpawnEnemy();
 
+	UFUNCTION(BlueprintCallable)
+		bool IsEmptyEnemyActors() { return EnemyActors.Num() == 0; }
+
 private:
 
 	//Array for faster finding and counting of enemy actors

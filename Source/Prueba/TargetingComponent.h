@@ -18,13 +18,10 @@ public:
 		float MaxTargetRange = 2000.0f;
 
 	UFUNCTION(BlueprintCallable, Category = "Targeting")
-		void TargetActor();
-
-	UFUNCTION(BlueprintCallable, Category = "Targeting")
 		void TargetLockOff();
 
 	UFUNCTION(BlueprintCallable, Category = "Targeting")
-		void TargetLockOn(AActor* TargetToLockOn);
+		void FindTarget();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Targeting | Debug")
 		bool bDrawDebug = false;
@@ -65,7 +62,7 @@ private:
 	bool bTargetLocked = false;
 
 	AActor* FindNearestTarget(TArray<AActor*> Actors) const;
-	void FindTarget();
+	void TargetLockOn(AActor* TargetToLockOn);
 
 	//~ Actor rotation
 	void ControlRotation(const bool ControlRotation) const;
