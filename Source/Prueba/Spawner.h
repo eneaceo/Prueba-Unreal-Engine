@@ -15,7 +15,7 @@ public:
 
 	//Enemy class to spawn
 	UPROPERTY(EditAnywhere)
-		TArray < TSubclassOf<AEnemy> > ArrayEnemyClass;
+		TSubclassOf<AEnemy> EnemyClass;
 
 	UFUNCTION()
 	void SpawnEnemy();

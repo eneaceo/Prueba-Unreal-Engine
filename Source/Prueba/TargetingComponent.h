@@ -26,6 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Targeting")
 		void TargetLockOn(AActor* TargetToLockOn);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Targeting | Debug")
+		bool bDrawDebug = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Targeting |Pitch Offset")
 		float PitchDistanceCoefficient = -0.2f;
 

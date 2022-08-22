@@ -8,7 +8,8 @@ void UProjectileSpawnerComponent::Fire()
 	//Compensate first projectile delay
 	SpawnProjectile();
 	//Looping timer
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UProjectileSpawnerComponent::SpawnProjectile, FireRate, bAutomaticFire);
+	bool bLooping = true;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UProjectileSpawnerComponent::SpawnProjectile, FireRate, bLooping);
 }
 
 void UProjectileSpawnerComponent::StopFire()
@@ -20,6 +21,7 @@ void UProjectileSpawnerComponent::SpawnProjectile()
 {
 	if (!ProjectileClass || !Character->GetMesh()->DoesSocketExist(SocketForSpawnLocation))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] Cannot spawn projectile... "), *GetName());
 		return;
 	}
 	
@@ -37,6 +39,7 @@ void UProjectileSpawnerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Checks
 	if (!GetOwner())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("[%s] Cannot get owner actor ... "), *GetName());

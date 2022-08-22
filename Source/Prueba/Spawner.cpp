@@ -11,8 +11,9 @@ void ASpawner::BeginPlay()
 
 void ASpawner::SpawnEnemy()
 {
-	if (ArrayEnemyClass.Num() == 0)
+	if (!EnemyClass)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] Enemy class not selected ... "), *GetName());
 		return;
 	}
 
@@ -23,6 +24,6 @@ void ASpawner::SpawnEnemy()
 
 	// Spawn Enemy
 	FActorSpawnParameters SpawnParams;
-	GetWorld()->SpawnActor<AEnemy>(ArrayEnemyClass[FMath::RandRange(0, ArrayEnemyClass.Num()-1)] , Transform, SpawnParams);
+	GetWorld()->SpawnActor<AEnemy>(EnemyClass, Transform, SpawnParams);
 }
 

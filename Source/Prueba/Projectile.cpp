@@ -2,7 +2,6 @@
 #include "GameFramework/Actor.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "HealthComponent.h"
 #include "Enemy.h"
 
 AProjectile::AProjectile()

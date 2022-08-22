@@ -1,17 +1,19 @@
 
 #include "Enemy.h"
 #include "PruebaGameMode.h"
+#include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Components/WidgetComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Components/WidgetComponent.h"
 #include "HealthBar.h"
-
-#include "DrawDebugHelpers.h"	
 
 AEnemy::AEnemy()
 {
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMesh"));
 	RootComponent = StaticMeshComponent;
+
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("CollisionComponent"));
+	CollisionBox->SetupAttachment(RootComponent);
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
 	HealthWidget = CreateDefaultSubobject<UWidgetComponent>("HealthWidget");
@@ -22,8 +24,10 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 
+	//Add enemy to enemies array in the gamemode, used in target system and for spawning options
 	GetWorld()->GetAuthGameMode<APruebaGameMode>()->AddEnemyActor(this);
 
+	//Initialize healthbar and make it rotate to face player
 	if (UHealthBar* HealthBar = Cast<UHealthBar>(HealthWidget->GetUserWidgetObject()))
 	{
 		HealthBar->SetOwner(this);
@@ -62,7 +66,6 @@ void AEnemy::MoveAround(float DeltaTime)
 	UWorld* World = GetWorld();
 	FHitResult HitResult;
 
-	// Test a ray with objects
 	FCollisionQueryParams TraceParams(FName("MoveAround"), FCollisionQueryParams::GetUnknownStatId(), true, this);
 	bool bHitAnything = World->LineTraceSingleByChannel(HitResult, PosStart, PosEnd, ECollisionChannel::ECC_Visibility, TraceParams);
 

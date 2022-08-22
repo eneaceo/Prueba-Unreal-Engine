@@ -30,9 +30,6 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (UIMin = "0.0"), Category = "FireOptions")
 		float FireRate = 0.2f;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "FireOptions")
-		bool bAutomaticFire = true;
-
 	//Get the position of spawn from the socket
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "FireOptions")
 		FName SocketForSpawnLocation = "headSocket";

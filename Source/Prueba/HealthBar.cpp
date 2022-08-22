@@ -10,6 +10,7 @@ void UHealthBar::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 
 	if (!Owner.IsValid()) 
 	{
+		UE_LOG(LogTemp, Warning, TEXT("[%s] Owner not valid ... "), *GetName());
 		return;
 	}
 

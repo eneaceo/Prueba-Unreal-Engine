@@ -18,6 +18,7 @@ void APruebaGameMode::SpawnEnemy()
 {
 	if (EnemyActors.Num() < MaxNumberOfEnemies && Spawners.Num() > 0)
 	{
+		//Random spawn point
 		Spawners[FMath::RandRange(0, Spawners.Num()-1)]->SpawnEnemy();
 	}
 }
@@ -32,16 +33,6 @@ void APruebaGameMode::RemoveEnemyActor(AActor* Enemy)
 	EnemyActors.Remove(Enemy);
 }
 
-bool APruebaGameMode::IsEmptyEnemyActors()
-{
-	return EnemyActors.Num() == 0;
-}
-
-int APruebaGameMode::NumOfEnemyActors()
-{
-	return EnemyActors.Num();
-}
-
 void APruebaGameMode::AddEnemySpawner(ASpawner* Spawner)
 {
 	Spawners.Add(Spawner);
@@ -50,7 +41,7 @@ void APruebaGameMode::AddEnemySpawner(ASpawner* Spawner)
 	{
 		bFirstSpawner = false;
 
-		//If there is no spawners we can't spawn enemies, we wait for it to start spawning enemies
+		//If there is no spawners we can't spawn enemies, we wait for the first one to start spawning enemies
 		FTimerHandle TimerHandle;
 		bool bLooping = true;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APruebaGameMode::SpawnEnemy, SpawnRate, bLooping);

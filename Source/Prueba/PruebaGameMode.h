@@ -31,12 +31,6 @@ public:
 		void RemoveEnemyActor(AActor* Enemy);
 
 	UFUNCTION(BlueprintCallable)
-		bool IsEmptyEnemyActors();
-
-	UFUNCTION(BlueprintCallable)
-		int NumOfEnemyActors();
-
-	UFUNCTION(BlueprintCallable)
 		void AddEnemySpawner(ASpawner* Enemy);
 
 	UFUNCTION(BlueprintCallable)

@@ -2,6 +2,8 @@
 #include "TargetingComponent.h"
 #include "PruebaGameMode.h"
 #include "GameFramework/CharacterMovementComponent.h"
+//Debug
+#include "DrawDebugHelpers.h"
 
 UTargetingComponent::UTargetingComponent()
 {
@@ -46,6 +48,7 @@ void UTargetingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 		return;
 	}
 
+	//LockedOnTarget is destroyed, change target
 	if (LockedOnTargetActor->IsPendingKill())
 	{
 		TargetLockOff();
@@ -55,6 +58,11 @@ void UTargetingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 	{
 		//Set rotation of player to Target Locked
 		SetControlRotationOnTarget(LockedOnTargetActor);
+
+		if (bDrawDebug)
+		{
+			::DrawDebugLine(GetWorld(), OwnerActor->GetActorLocation(), LockedOnTargetActor->GetActorLocation(), FColor(0, 0, 255), false, 1.0f, 0, 1);
+		}
 	}
 }
 
