@@ -1,4 +1,3 @@
-# Prueba
+# Prueba Unreal Engine
 
-Unreal Engine skill test
-Basic systems implementation
+Prueba básica de nivel que tuve que hacer para una entrevista de trabajo.
